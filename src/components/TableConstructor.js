@@ -24,9 +24,9 @@ function Row(props) {
 	const { row, headersCount, withIcons, backgroundColors, rowIndex } = props;
 	const isFolder = row.length < headersCount - 1;
 	const [open, setOpen] = useState(false);
-	console.log(backgroundColors[rowIndex])
+
 	return (<>
-		<TableRow key={rowIndex} sx={(theme) => ({backgroundColor: backgroundColors[rowIndex]})}>
+		<TableRow sx={theme => ({backgroundColor: backgroundColors[rowIndex]})}>
 			{!isFolder ? (
 				row.map((item) => (
 					<StyledTableCell align='center'>{item}</StyledTableCell>
@@ -58,7 +58,7 @@ export default function TableConstructor(props) {
 
 	return (
 		<TableContainer>
-			<Table>
+			<Table sx={{ minWidth: "1000px" }}>
 				<TableHead>
 					<TableRow>
 						{headers.map((title) => (

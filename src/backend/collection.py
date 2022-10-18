@@ -21,7 +21,6 @@ def format_file_size(size):
 
 ftp = FTP('89.179.119.189')
 ftp.login('admin', 'superroot1')
-root_path = 'dc7611f5-3fc4-d801-1060-11f53fc4d801/debian/root/site/collection/all'
 
 '''
 {
@@ -34,7 +33,7 @@ root_path = 'dc7611f5-3fc4-d801-1060-11f53fc4d801/debian/root/site/collection/al
     }
 }
 '''
-full_list = str(ftp_walk(root_path)).replace("'", '"')
+full_list = str(ftp_walk('site')).replace("'", '"')
 print(full_list)
 open('collection.json', 'w').write(full_list)
 
