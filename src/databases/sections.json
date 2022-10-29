@@ -1,0 +1,18 @@
+{
+	"collection": {
+		"description": "Collection of a few Software",
+		"charsToUpCase": null
+	},
+	"import_substitution": {
+		"description": "Russian? Come here to get a list of import-substituted software",
+		"charsToUpCase": [0, 7]
+	},
+	"trum_blacklist": {
+		"description": "List of those who are prohibited from entering the TRUM",
+		"charsToUpCase": [0, 1, 2, 3, 5]
+	},
+	"trum_admins": {
+		"description": "List of those control the TRUM",
+		"charsToUpCase": [0, 1, 2, 3, 5]
+	}
+}

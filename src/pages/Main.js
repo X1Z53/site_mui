@@ -6,21 +6,22 @@ import {
   Grid
 } from '@mui/material';
 import { formatString } from '../functions';
-import { sections } from '../config';
 
+const database = require('../databases/sections.json')
+const sections = Object.keys(database)
 
 export default function Main() {return (
 	<Grid sx={{ flexGrow: 1 }} justifyContent='center' container spacing={5}>
-		{sections.map(([title, description, titleFormatParametrs], index) => (
+		{sections.map((section, index) => (
 			<Grid item xs={12} sm={6} md={4}>
 				<Card sx={{ textAlign: 'center' }}>
-					<CardActionArea href={'/' + title}>
+					<CardActionArea href={'/' + section}>
 						<CardContent>
 							<Typography gutterBottom variant='h4' component='div'>
-								{formatString(title, titleFormatParametrs)}
+								{formatString(section, database[section]['charsToUpCase'])}
 							</Typography>
 							<Typography sx={{ fontStyle: 'italic' }} variant='body1'>
-								{description}
+								{database[section]['description']}
 							</Typography>
 						</CardContent>
 					</CardActionArea>

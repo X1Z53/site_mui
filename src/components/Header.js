@@ -5,17 +5,22 @@ import {
   Typography,
   Drawer,
   Box,
-  InputBase
 } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
 import { useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
+import { formatString } from "../functions";
+
+// Icons
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import Sidebar from './Sidebar';
-import { formatString } from '../functions';
 
+// Components
+import Sidebar from "./Sidebar";
 
-const pageName = formatString(document.URL.split("/").at(-1) || "Main page");
+const sections = require("../databases/sections.json");
+
+const urlElement = document.URL.split("/").at(-1);
+const pageName = urlElement
+  ? formatString(urlElement, sections[urlElement]["charsToUpCase"])
+  : "Main Page";
 
 // Sidebar
 function drawSidebar(sidebarStatus, changeSidebarStatus) {
@@ -25,51 +30,11 @@ function drawSidebar(sidebarStatus, changeSidebarStatus) {
         onClick={changeSidebarStatus(false)}
         onKeyDown={changeSidebarStatus(false)}
       >
-	  <Sidebar />
+        <Sidebar />
       </Box>
     </Drawer>
   );
-};
-
-// Search
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25)
-  },
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto"
-  }
-}));
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center"
-}));
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch"
-      }
-    }
-  }
-}));
+}
 
 export default function Header() {
   const [sidebarStatus, setSidebarStatus] = useState({ open: false });
@@ -83,36 +48,23 @@ export default function Header() {
   };
 
   return (
-    <AppBar sx={{ marginBottom: '20px'}} position="static">
+    <AppBar sx={{ marginBottom: "20px" }} position="static">
       <Toolbar>
         <IconButton onClick={changeSidebarStatus(true)}>
           <MenuRoundedIcon
-            size="large"
             edge="start"
-            color="inherit"
-            aria-label="sidebar"
+            sx={(theme) => ({ color: theme.palette.text.primary })}
           />
         </IconButton>
         <Typography
+          variant="h4"
           sx={{
             flexGrow: 1,
             textAlign: "center",
-            display: { xs: "none", sm: "block" }
           }}
-          variant="h4"
-          fontWeight="bold"
         >
           {pageName}
         </Typography>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
       </Toolbar>
 
       {drawSidebar(sidebarStatus, changeSidebarStatus)}
